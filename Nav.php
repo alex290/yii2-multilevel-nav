@@ -29,30 +29,39 @@ use yii\helpers\Html;
  *         ],
  *         [
  *             'label' => 'Dropdown',
- *             'items' => [
+ *              'items' => [
+ *                  [
+ *                      'label' => 'Dropdown',
+ *                      'items' => [
+ *                          ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
+ *                          ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
+ *                      ],
+ *                  ],
  *                  ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
- *                  '<div class="dropdown-divider"></div>',
- *                  '<div class="dropdown-header">Dropdown Header</div>',
  *                  ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
- *             ],
- *         ],
- *         [
- *             'label' => 'Login',
- *             'url' => ['site/login'],
- *             'visible' => Yii::$app->user->isGuest
+ *              ],
  *         ],
  *     ],
  *     'options' => ['class' =>'nav-pills'], // set this to nav-tabs to get tab-styled navigation
  * ]);
  * ```
- *
- * Note: Multilevel dropdowns beyond Level 1 are not supported in Bootstrap 5.
- *
- * @see https://getbootstrap.com/docs/5.1/components/navs/
- * @see https://getbootstrap.com/docs/5.1/components/dropdowns/
- *
- * @author Antonio Ramirez <amigo.cobos@gmail.com>
+
  */
+
+$fff = [
+    'label' => 'Dropdown',
+    'items' => [
+        [
+            'label' => 'Dropdown',
+            'items' => [
+                ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
+                ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
+            ],
+        ],
+        ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
+        ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
+    ],
+];
 class Nav extends Widget
 {
     /**
@@ -177,7 +186,6 @@ class Nav extends Widget
         $items = ArrayHelper::getValue($item, 'items');
         $url = ArrayHelper::getValue($item, 'url');
         $linkOptions = ArrayHelper::getValue($item, 'linkOptions', []);
-        $disabled = ArrayHelper::getValue($item, 'disabled', false);
         $active = $this->isItemActive($item);
 
         $htmlRet = '';

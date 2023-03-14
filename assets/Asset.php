@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2015 Yiister
  * @license https://github.com/yiister/yii2-gentelella/blob/master/LICENSE
@@ -13,9 +14,7 @@ class Asset extends \yii\web\AssetBundle
         'css/app.css',
     ];
 
-    public $js = [
-        'js/app.js',
-    ];
+    public $js = [];
 
     public $depends = [
         'yii\web\YiiAsset',
@@ -23,5 +22,4 @@ class Asset extends \yii\web\AssetBundle
     ];
 
     public $sourcePath = '@alex290/multinav/assets/scr';
-
 }

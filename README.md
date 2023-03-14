@@ -27,5 +27,29 @@ Usage
 
 Once the extension is installed, simply use it in your code by  :
 
-```php
-<?= \alex290\multinav\AutoloadExample::widget(); ?>```
+
+
+    echo Nav::widget([
+            'items' => [
+                [
+                    'label' => 'Home',
+                    'url' => ['site/index'],
+                    'linkOptions' => [],
+                ],
+                [
+                    'label' => 'Dropdown',
+                     'items' => [
+                         [
+                             'label' => 'Dropdown',
+                             'items' => [
+                                 ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
+                                 ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
+                             ],
+                         ],
+                         ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
+                         ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
+                     ],
+                ],
+            ],
+            'options' => ['class' =>'nav-pills'], // set this to nav-tabs to get tab-styled navigation
+        ]);
