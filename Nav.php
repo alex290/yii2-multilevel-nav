@@ -118,9 +118,7 @@ class Nav extends Widget
      */
 
 
-    /**
-     * {@inheritDoc}
-     */
+
     public function init()
     {
         parent::init();
@@ -133,11 +131,7 @@ class Nav extends Widget
         Html::addCssClass($this->options, ['widget' => 'nav']);
     }
 
-    /**
-     * Renders the widget.
-     * @return string
-     * @throws InvalidConfigException|Throwable
-     */
+
     public function run(): string
     {
         Asset::register($this->getView());
@@ -145,11 +139,7 @@ class Nav extends Widget
         return $this->renderItems();
     }
 
-    /**
-     * Renders widget items.
-     * @return string
-     * @throws InvalidConfigException|Throwable
-     */
+
     public function renderItems(): string
     {
         $items = [];
@@ -165,13 +155,7 @@ class Nav extends Widget
         return '<div class="cm-e-menu">' . Html::tag('ul', implode("\n", $items), $this->options) . '</div>';
     }
 
-    /**
-     * Renders a widget's item.
-     * @param string|array $item the item to render.
-     * @return string the rendering result.
-     * @throws InvalidConfigException
-     * @throws Throwable
-     */
+
     public function renderItem($item): string
     {
         if (is_string($item)) {
@@ -210,19 +194,11 @@ class Nav extends Widget
         return $htmlRet;
     }
 
-    /**
-     * Renders the given items as a dropdown.
-     * This method is called to create sub-menus.
-     * @param array $items the given items. Please refer to [[Dropdown::items]] for the array structure.
-     * @param array $parentItem the parent item information. Please refer to [[items]] for the structure of this array.
-     * @return string the rendering result.
-     * @throws Throwable
-     */
+
     protected function renderDropdown(array $items): string
     {
         $htmlRet = '<ul class="submenu">';
         foreach ($items as $key => $item) {
-            $htmlLock = '';
             $encodeLabel = $item['encode'] ?? $this->encodeLabels;
             $label = $encodeLabel ? Html::encode($item['label']) : $item['label'];
             $options = ArrayHelper::getValue($item, 'options', []);
@@ -248,53 +224,11 @@ class Nav extends Widget
         return $htmlRet;
     }
 
-    /**
-     * Check to see if a child item is active optionally activating the parent.
-     * @param array $items @see items
-     * @param bool $active should the parent be active too
-     * @return array
-     * @throws Exception
-     * @see items
-     */
-    protected function isChildActive(array $items, bool &$active): array
-    {
-        foreach ($items as $i => $child) {
-            if (is_array($child) && !ArrayHelper::getValue($child, 'visible', true)) {
-                continue;
-            }
-            if (is_array($child) && $this->isItemActive($child)) {
-                ArrayHelper::setValue($items[$i], 'active', true);
-                if ($this->activateParents) {
-                    $active = true;
-                }
-            }
-            $childItems = ArrayHelper::getValue($child, 'items');
-            if (is_array($childItems)) {
-                $activeParent = false;
-                $items[$i]['items'] = $this->isChildActive($childItems, $activeParent);
-                if ($activeParent) {
-                    Html::addCssClass($items[$i]['options'], ['activate' => 'active']);
-                    $active = true;
-                }
-            }
-        }
 
-        return $items;
-    }
-
-    /**
-     * Checks whether a menu item is active.
-     * This is done by checking if [[route]] and [[params]] match that specified in the `url` option of the menu item.
-     * When the `url` option of a menu item is specified in terms of an array, its first element is treated
-     * as the route for the item and the rest of the elements are the associated parameters.
-     * Only when its route and parameters match [[route]] and [[params]], respectively, will a menu item
-     * be considered active.
-     * @param array $item the menu item to be checked
-     * @return bool whether the menu item is active
-     * @throws Exception
-     */
     protected function isItemActive(array $item): bool
     {
+        $itemsChild = ArrayHelper::getValue($item, 'items');
+
         if (!$this->activateItems) {
             return false;
         }
@@ -312,6 +246,15 @@ class Nav extends Widget
             }
         }
 
-        return false;
+        $actChild = false;
+
+        if (!empty($itemsChild)) {
+            foreach ($itemsChild as $valueChild) {
+                if (!$actChild)
+                    $actChild = $this->isItemActive($valueChild);
+            }
+        }
+
+        return $actChild;
     }
 }
