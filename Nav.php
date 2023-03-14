@@ -107,7 +107,6 @@ class Nav extends Widget
     /**
      * @var string name of a class to use for rendering dropdowns within this widget. Defaults to [[Dropdown]].
      */
-    public $dropdownClass = Dropdown::class;
 
 
     /**
@@ -122,7 +121,7 @@ class Nav extends Widget
         if ($this->params === null) {
             $this->params = Yii::$app->request->getQueryParams();
         }
-        Html::addCssClass($this->options, ['widget' => 'nav']);
+        Html::addCssClass($this->options, ['widget' => '']);
     }
 
     /**
@@ -149,11 +148,12 @@ class Nav extends Widget
             if (isset($item['visible']) && !$item['visible']) {
                 continue;
             }
-            // debug($item);
+            // 
             $items[] = $this->renderItem($item);
         }
+        // debug($items);
 
-        return Html::tag('ul', implode("\n", $items), $this->options);
+        return '<div class="cm-e-menu">' . Html::tag('ul', implode("\n", $items), $this->options) . '</div>';
     }
 
     /**
@@ -180,33 +180,26 @@ class Nav extends Widget
         $disabled = ArrayHelper::getValue($item, 'disabled', false);
         $active = $this->isItemActive($item);
 
+        $htmlRet = '';
+
+        if ($this->activateItems && $active) {
+            Html::addCssClass($options, ['activate' => 'active']);
+        }
+        Html::addCssClass($options, ['widget' => 'topmenu']);
+        Html::addCssClass($linkOptions, ['activate' => 'text-light']);
+
         if (empty($items)) {
             $items = '';
-            Html::addCssClass($options, ['widget' => 'nav-item']);
-            Html::addCssClass($linkOptions, ['widget' => 'nav-link']);
+
+            $htmlRet = Html::tag('li', Html::a($label, $url, $linkOptions), $options);
         } else {
-            Html::addCssClass($options, ['widget' => 'nav-item']);
-            Html::addCssClass($linkOptions, ['widget' => 'nav-link']);
-            // $linkOptions['data']['bs-toggle'] = 'dropdown';
-            // $linkOptions['role'] = 'button';
-            // $linkOptions['aria']['expanded'] = 'false';
-            // Html::addCssClass($options, ['widget' => 'dropdown nav-item']);
-            // Html::addCssClass($linkOptions, ['widget' => 'dropdown-toggle nav-link']);
-            // if (is_array($items)) {
-            //     $items = $this->isChildActive($items, $active);
-            //     $items = $this->renderDropdown($items, $item);
-            // }
+            if (is_array($items)) {
+                // $items = $this->isChildActive($items, $active);
+                $htmlRet = $htmlRet = Html::tag('li', Html::a($label, $url, $linkOptions) . $this->renderDropdown($items), $options);
+            }
         }
 
-        if ($disabled) {
-            ArrayHelper::setValue($linkOptions, 'tabindex', '-1');
-            ArrayHelper::setValue($linkOptions, 'aria.disabled', 'true');
-            Html::addCssClass($linkOptions, ['disable' => 'disabled']);
-        } elseif ($this->activateItems && $active) {
-            Html::addCssClass($linkOptions, ['activate' => 'active']);
-        }
-
-        return Html::tag('li', Html::a($label, $url, $linkOptions), $options);
+        return $htmlRet;
     }
 
     /**
@@ -217,18 +210,28 @@ class Nav extends Widget
      * @return string the rendering result.
      * @throws Throwable
      */
-    protected function renderDropdown(array $items, array $parentItem): string
+    protected function renderDropdown(array $items): string
     {
-        /** @var Widget $dropdownClass */
-        $dropdownClass = $this->dropdownClass;
-
-        return $dropdownClass::widget([
-            'options' => ArrayHelper::getValue($parentItem, 'dropdownOptions', []),
-            'items' => $items,
-            'encodeLabels' => $this->encodeLabels,
-            'clientOptions' => [],
-            'view' => $this->getView(),
-        ]);
+        $htmlRet = '<ul class="submenu">';
+        foreach ($items as $key => $item) {
+            $htmlLock = '';
+            $encodeLabel = $item['encode'] ?? $this->encodeLabels;
+            $label = $encodeLabel ? Html::encode($item['label']) : $item['label'];
+            $options = ArrayHelper::getValue($item, 'options', []);
+            $itemsChild = ArrayHelper::getValue($item, 'items');
+            $url = ArrayHelper::getValue($item, 'url');
+            $linkOptions = ArrayHelper::getValue($item, 'linkOptions', []);
+            $disabled = ArrayHelper::getValue($item, 'disabled', false);
+            $active = $this->isItemActive($item);
+            Html::addCssClass($linkOptions, ['activate' => 'text-light']);
+            if (empty($itemsChild)) {
+                $htmlRet = $htmlRet .  Html::tag('li', Html::a($label, $url, $linkOptions), $options);
+            } else {
+                $htmlRet = $htmlRet .  Html::tag('li', Html::a($label, $url, $linkOptions) . $this->renderDropdown($itemsChild), $options);
+            }
+        }
+        $htmlRet = $htmlRet . '</ul>';
+        return $htmlRet;
     }
 
     /**
