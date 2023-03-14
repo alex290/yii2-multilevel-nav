@@ -175,7 +175,7 @@ class Nav extends Widget
         $label = $encodeLabel ? Html::encode($item['label']) : $item['label'];
         $options = ArrayHelper::getValue($item, 'options', []);
         $items = ArrayHelper::getValue($item, 'items');
-        $url = ArrayHelper::getValue($item, 'url', '#');
+        $url = ArrayHelper::getValue($item, 'url');
         $linkOptions = ArrayHelper::getValue($item, 'linkOptions', []);
         $disabled = ArrayHelper::getValue($item, 'disabled', false);
         $active = $this->isItemActive($item);
@@ -185,11 +185,13 @@ class Nav extends Widget
             Html::addCssClass($options, ['widget' => 'nav-item']);
             Html::addCssClass($linkOptions, ['widget' => 'nav-link']);
         } else {
-            $linkOptions['data']['bs-toggle'] = 'dropdown';
-            $linkOptions['role'] = 'button';
-            $linkOptions['aria']['expanded'] = 'false';
-            Html::addCssClass($options, ['widget' => 'dropdown nav-item']);
-            Html::addCssClass($linkOptions, ['widget' => 'dropdown-toggle nav-link']);
+            Html::addCssClass($options, ['widget' => 'nav-item']);
+            Html::addCssClass($linkOptions, ['widget' => 'nav-link']);
+            // $linkOptions['data']['bs-toggle'] = 'dropdown';
+            // $linkOptions['role'] = 'button';
+            // $linkOptions['aria']['expanded'] = 'false';
+            // Html::addCssClass($options, ['widget' => 'dropdown nav-item']);
+            // Html::addCssClass($linkOptions, ['widget' => 'dropdown-toggle nav-link']);
             // if (is_array($items)) {
             //     $items = $this->isChildActive($items, $active);
             //     $items = $this->renderDropdown($items, $item);
@@ -204,7 +206,7 @@ class Nav extends Widget
             Html::addCssClass($linkOptions, ['activate' => 'active']);
         }
 
-        return Html::tag('li', Html::a($label, $url, $linkOptions) . $items, $options);
+        return Html::tag('li', Html::a($label, $url, $linkOptions), $options);
     }
 
     /**
@@ -279,29 +281,18 @@ class Nav extends Widget
         if (!$this->activateItems) {
             return false;
         }
+        $thRoute = $this->route;
+        if ($thRoute === "site/index")
+            $thRoute = "/";
+
         if (isset($item['active'])) {
             return ArrayHelper::getValue($item, 'active', false);
         }
         if (isset($item['url']) && is_array($item['url']) && isset($item['url'][0])) {
             $route = $item['url'][0];
-            if ($route[0] !== '/' && Yii::$app->controller) {
-                $route = Yii::$app->controller->module->getUniqueId() . '/' . $route;
+            if ($route == $thRoute) {
+                return true;
             }
-            if (ltrim($route, '/') !== $this->route) {
-                return false;
-            }
-            unset($item['url']['#']);
-            if (count($item['url']) > 1) {
-                $params = $item['url'];
-                unset($params[0]);
-                foreach ($params as $name => $value) {
-                    if ($value !== null && (!isset($this->params[$name]) || $this->params[$name] != $value)) {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
         }
 
         return false;
