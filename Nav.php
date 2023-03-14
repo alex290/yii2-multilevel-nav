@@ -130,7 +130,7 @@ class Nav extends Widget
         if ($this->params === null) {
             $this->params = Yii::$app->request->getQueryParams();
         }
-        Html::addCssClass($this->options, ['widget' => '']);
+        Html::addCssClass($this->options, ['widget' => 'nav']);
     }
 
     /**
@@ -193,7 +193,7 @@ class Nav extends Widget
         if ($this->activateItems && $active) {
             Html::addCssClass($options, ['activate' => 'active']);
         }
-        Html::addCssClass($options, ['widget' => 'topmenu']);
+        Html::addCssClass($options, ['widget' => 'topmenu nav-link']);
         Html::addCssClass($linkOptions, ['activate' => 'text-light']);
 
         if (empty($items)) {
@@ -232,6 +232,7 @@ class Nav extends Widget
             $disabled = ArrayHelper::getValue($item, 'disabled', false);
             $active = $this->isItemActive($item);
             Html::addCssClass($linkOptions, ['activate' => 'text-light']);
+            Html::addCssClass($options, ['widget' => 'nav-link']);
             if (empty($itemsChild)) {
                 $htmlRet = $htmlRet .  Html::tag('li', Html::a($label, $url, $linkOptions), $options);
             } else {
