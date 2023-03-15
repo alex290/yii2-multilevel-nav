@@ -1,61 +1,51 @@
 .cm-e-menu {
-	background-color: #222;
-	position: relative;
-	z-index: 1000;
-	color: #fff;
-	box-shadow: 0 0 10px black;
-	}
-.cm-e-menu ul {
-	margin: 0; padding: 0;
+    position: relative;
+    z-index: 1000;
 }
-.cm-e-menu li {
-	position: relative;
-	white-space: nowrap;
-	cursor: pointer;
-	list-style: none;
 
-	-webkit-transition: background-color ease-in 300ms;
-	-moz-transition: background-color ease-in 300ms;
-	-ms-transition: background-color ease-in 300ms;
-	-o-transition: background-color ease-in 300ms;
-	transition: background-color ease-in 300ms;
+.cm-e-menu ul {
+    margin: 0;
+    padding: 0;
+}
+
+.cm-e-menu li {
+    position: relative;
+    white-space: nowrap;
+    cursor: pointer;
+    list-style: none;
+
+    -webkit-transition: background-color ease-in 300ms;
+    -moz-transition: background-color ease-in 300ms;
+    -ms-transition: background-color ease-in 300ms;
+    -o-transition: background-color ease-in 300ms;
+    transition: background-color ease-in 300ms;
 }
 
 .cm-e-menu a {
     text-decoration: none;
 }
-.cm-e-menu li.active {
-    background-color: #3d3d3d;
-	text-shadow: 0 10px 10px #222;
-}
-.cm-e-menu li:hover {
-	background-color: #3d3d3d;
-	text-shadow: 0 10px 10px #222;
-}
+
+
 .cm-e-menu ul li.topmenu {
-	display: inline-table;
-}
-.cm-e-menu .topmenu ul {
-	display:none;
-	position: absolute;
-	background-color: #222;
-}
-.cm-e-menu li:hover > ul {
-	display: table;
-}
-.cm-e-menu ul.submenu {
-	top: 100%; left: 0;
-	box-shadow: 0 0 10px black;
-}
-.cm-e-menu ul.submenu .submenu {
-	top: -.5em; left: 100%;
+    display: inline-table;
 }
 
-.cm-e-menu li.divider {
-	border-top: 1px solid #343434;
-	margin: .5rem auto .3rem;
-	cursor: default;
+.cm-e-menu .topmenu ul {
+    display: none;
+    position: absolute;
+    /* background-color: #222; */
 }
-.cm-e-menu li.divider:hover {
-	background-color: transparent;
+
+.cm-e-menu li:hover>ul {
+    display: table;
+}
+
+.cm-e-menu ul.submenu {
+    top: 100%;
+    left: 0;
+}
+
+.cm-e-menu ul.submenu .submenu {
+    top: -.5em;
+    left: 100%;
 }

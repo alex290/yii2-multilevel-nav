@@ -14,6 +14,8 @@ use yii\base\Widget;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
+// $this->getView()->registerCss("body { background: #f00; }");
+
 /**
  * Nav renders a nav HTML component.
  *
@@ -106,6 +108,11 @@ class Nav extends Widget
      * @see isItemActive
      */
     public $route = null;
+
+    public $backgroundColor = '#222';
+    public $backgroundColorHover = '#3d3d3d';
+    public $backgroundColorActive = '#3d3d3d';
+    public $color = '#fff';
     /**
      * @var array|null the parameters used to determine if a menu item is active or not.
      * If not set, it will use `$_GET`.
@@ -135,6 +142,26 @@ class Nav extends Widget
     public function run(): string
     {
         Asset::register($this->getView());
+        $str = <<<CSS
+        
+        .cm-e-menu{
+            background-color: {$this->backgroundColor}; 
+            color: {$this->color};
+        } 
+        .cm-e-menu li.active{
+            background-color: {$this->backgroundColorActive};
+        } 
+        .cm-e-menu li:hover{
+            background-color: {$this->backgroundColorHover};
+        } 
+        .cm-e-menu .topmenu ul{
+            background-color: {$this->backgroundColor};
+        } 
+
+        CSS;
+
+
+        Yii::$app->getView()->registerCss($str);
 
         return $this->renderItems();
     }

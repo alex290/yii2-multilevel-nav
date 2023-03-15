@@ -51,5 +51,11 @@ Once the extension is installed, simply use it in your code by  :
                      ],
                 ],
             ],
-            'options' => ['class' =>'nav-pills'], // set this to nav-tabs to get tab-styled navigation
+            'options' => [
+                'class' =>'nav-pills', // set this to nav-tabs to get tab-styled navigation
+                'backgroundColor' => '#222', // Цвет фона меню
+                'backgroundColorHover' => '#3d3d3d', // Цвет пункта меню при наведении
+                'backgroundColorActive' => '#3d3d3d', // Цвет пункта меню активного
+                'color' => '#fff', // Цвет текста меню
+            ],
         ]);
