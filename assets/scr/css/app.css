@@ -3,7 +3,6 @@
 	position: relative;
 	z-index: 1000;
 	color: #fff;
-	font-weight: 200;
 	box-shadow: 0 0 10px black;
 	}
 .cm-e-menu ul {
@@ -13,7 +12,6 @@
 	position: relative;
 	white-space: nowrap;
 	cursor: pointer;
-	/* text-transform: capitalize !important; */
 	list-style: none;
 
 	-webkit-transition: background-color ease-in 300ms;
@@ -36,7 +34,6 @@
 }
 .cm-e-menu ul li.topmenu {
 	display: inline-table;
-	/* padding: .3em 1em; */
 }
 .cm-e-menu .topmenu ul {
 	display:none;
@@ -48,20 +45,13 @@
 }
 .cm-e-menu ul.submenu {
 	top: 100%; left: 0;
-	/* padding-top: .5em;
-	padding-bottom: .5em;	 */
 	box-shadow: 0 0 10px black;
 }
 .cm-e-menu ul.submenu .submenu {
 	top: -.5em; left: 100%;
-	font-size: 1em
 }
-.cm-e-menu ul.submenu li {
-	/* padding: .2em 1.5em; */
-	font-size: .9rem;
-}
+
 .cm-e-menu li.divider {
-	/* padding: 0; */
 	border-top: 1px solid #343434;
 	margin: .5rem auto .3rem;
 	cursor: default;
