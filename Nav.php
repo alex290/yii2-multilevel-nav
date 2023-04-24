@@ -133,6 +133,12 @@ class Nav extends Widget
         if (!array_key_exists('color', $this->options)) {
             $this->options['color'] = '#fff';
         }
+        if (!array_key_exists('colorActive', $this->options)) {
+            $this->options['colorActive'] = '#fff';
+        }
+        if (!array_key_exists('colorHover', $this->options)) {
+            $this->options['colorHover'] = '#fff';
+        }
         if (!array_key_exists('backgroundColorActive', $this->options)) {
             $this->options['backgroundColorActive'] = '#3d3d3d';
         }
@@ -145,7 +151,32 @@ class Nav extends Widget
         .cm-e-menu{
             background-color: {$this->options['backgroundColor']}; 
             color: {$this->options['color']};
+        }
+        .cm-e-menu li a{
+            color: {$this->options['color']} !important;
+        }
+        .cm-e-menu li.active a{
+            color: {$this->options['colorActive']} !important;
         } 
+        .cm-e-menu li:hover a{
+            color: {$this->options['colorHover']} !important;
+        }
+
+        .cm-e-menu li:hover li a{
+            color: {$this->options['color']} !important;
+        }
+        .cm-e-menu li li:hover a{
+            color: {$this->options['colorHover']} !important;
+        }
+
+        .cm-e-menu li li:hover li a{
+            color: {$this->options['color']} !important;
+        }
+
+        .cm-e-menu li li li:hover a{
+            color: {$this->options['colorHover']} !important;
+        }
+        
         .cm-e-menu li.active{
             background-color: {$this->options['backgroundColorActive']};
         } 

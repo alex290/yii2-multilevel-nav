@@ -57,5 +57,7 @@ Once the extension is installed, simply use it in your code by  :
                 'backgroundColorHover' => '#3d3d3d', // Цвет пункта меню при наведении
                 'backgroundColorActive' => '#3d3d3d', // Цвет пункта меню активного
                 'color' => '#fff', // Цвет текста меню
+                'colorActive' => '#fff', // Цвет текста меню активного
+                'colorHover' => '#fff', // Цвет текста меню при наведении
             ],
         ]);
