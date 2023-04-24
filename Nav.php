@@ -50,20 +50,6 @@ use yii\helpers\Html;
 
  */
 
-$fff = [
-    'label' => 'Dropdown',
-    'items' => [
-        [
-            'label' => 'Dropdown',
-            'items' => [
-                ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
-                ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
-            ],
-        ],
-        ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
-        ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
-    ],
-];
 class Nav extends Widget
 {
     /**
@@ -109,10 +95,10 @@ class Nav extends Widget
      */
     public $route = null;
 
-    public $backgroundColor = '#222';
-    public $backgroundColorHover = '#3d3d3d';
-    public $backgroundColorActive = '#3d3d3d';
-    public $color = '#fff';
+    // public $backgroundColor = '#222';
+    // public $backgroundColorHover = '#3d3d3d';
+    // public $backgroundColorActive = '#3d3d3d';
+    // public $color = '#fff';
     /**
      * @var array|null the parameters used to determine if a menu item is active or not.
      * If not set, it will use `$_GET`.
@@ -141,21 +127,33 @@ class Nav extends Widget
 
     public function run(): string
     {
+        if (!array_key_exists('backgroundColor', $this->options)) {
+            $this->options['backgroundColor'] = '#222';
+        }
+        if (!array_key_exists('color', $this->options)) {
+            $this->options['color'] = '#fff';
+        }
+        if (!array_key_exists('backgroundColorActive', $this->options)) {
+            $this->options['backgroundColorActive'] = '#3d3d3d';
+        }
+        if (!array_key_exists('backgroundColorHover', $this->options)) {
+            $this->options['backgroundColorHover'] = '#3d3d3d';
+        }
         Asset::register($this->getView());
         $str = <<<CSS
         
         .cm-e-menu{
-            background-color: {$this->backgroundColor}; 
-            color: {$this->color};
+            background-color: {$this->options['backgroundColor']}; 
+            color: {$this->options['color']};
         } 
         .cm-e-menu li.active{
-            background-color: {$this->backgroundColorActive};
+            background-color: {$this->options['backgroundColorActive']};
         } 
         .cm-e-menu li:hover{
-            background-color: {$this->backgroundColorHover};
+            background-color: {$this->options['backgroundColorHover']};
         } 
         .cm-e-menu .topmenu ul{
-            background-color: {$this->backgroundColor};
+            background-color: {$this->options['backgroundColor']};
         } 
 
         CSS;
