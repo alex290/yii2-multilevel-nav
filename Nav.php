@@ -234,7 +234,7 @@ class Nav extends Widget
             Html::addCssClass($options, ['activate' => 'active']);
         }
         Html::addCssClass($options, ['widget' => 'topmenu nav-link']);
-        Html::addCssClass($linkOptions, ['widget' => 'text-light']);
+        Html::addCssClass($linkOptions, ['widget' => 'text-link']);
 
         if (empty($items)) {
             $items = '';
@@ -263,7 +263,7 @@ class Nav extends Widget
             $linkOptions = ArrayHelper::getValue($item, 'linkOptions', []);
             $disabled = ArrayHelper::getValue($item, 'disabled', false);
             $active = $this->isItemActive($item);
-            Html::addCssClass($linkOptions, ['widget' => 'text-light']);
+            Html::addCssClass($linkOptions, ['widget' => 'text-link']);
             Html::addCssClass($options, ['widget' => 'nav-link']);
 
             if ($active) {
