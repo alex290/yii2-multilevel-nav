@@ -153,28 +153,28 @@ class Nav extends Widget
             color: {$this->options['color']};
         }
         .cm-e-menu li a{
-            color: {$this->options['color']} !important;
+            color: {$this->options['color']};
         }
         .cm-e-menu li.active a{
-            color: {$this->options['colorActive']} !important;
+            color: {$this->options['colorActive']};
         } 
         .cm-e-menu li:hover a{
-            color: {$this->options['colorHover']} !important;
+            color: {$this->options['colorHover']};
         }
 
         .cm-e-menu li:hover li a{
-            color: {$this->options['color']} !important;
+            color: {$this->options['color']};
         }
         .cm-e-menu li li:hover a{
-            color: {$this->options['colorHover']} !important;
+            color: {$this->options['colorHover']};
         }
 
         .cm-e-menu li li:hover li a{
-            color: {$this->options['color']} !important;
+            color: {$this->options['color']};
         }
 
         .cm-e-menu li li li:hover a{
-            color: {$this->options['colorHover']} !important;
+            color: {$this->options['colorHover']};
         }
         
         .cm-e-menu li.active{
